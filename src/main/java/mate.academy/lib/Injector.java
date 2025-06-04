@@ -1,5 +1,10 @@
 package mate.academy.lib;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 import mate.academy.service.FileReaderService;
 import mate.academy.service.ProductParser;
 import mate.academy.service.ProductService;
@@ -7,35 +12,24 @@ import mate.academy.service.impl.FileReaderServiceImpl;
 import mate.academy.service.impl.ProductParserImpl;
 import mate.academy.service.impl.ProductServiceImpl;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-//import javax.inject.Inject; // саме це!
-import mate.academy.lib.Inject;
-
-
 public class Injector {
 
     private static final Injector injector = new Injector();
+    private Map<Class<?>, Object> instances = new HashMap<>();
 
     public static Injector getInjector() {
         return injector;
     }
 
-    Map<Class<?>, Object> instances = new HashMap<>();
-
     public Object getInstance(Class<?> interfaceClazz) {
         Object clazzImplementationInstance = null;
-
 
         Class<?> clazz = findImplementation(interfaceClazz);
 
         //check if annotation @Component is present
         if (!clazz.isAnnotationPresent(Component.class)) {
-            throw new RuntimeException("No @Component annotation above the class");
+            throw new RuntimeException(
+                    "No @Component annotation above the class");
         }
 
         Field[] declaredFields = clazz.getDeclaredFields();
@@ -71,8 +65,12 @@ public class Injector {
             Object object = constructor.newInstance();
             instances.put(clazz, object);
             return object;
-        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException("Can`t create a new instance of " + clazz.getName(), e);
+        } catch (NoSuchMethodException
+                 | InvocationTargetException
+                 | InstantiationException
+                 | IllegalAccessException e) {
+            throw new RuntimeException(
+                    "Can`t create a new instance of " + clazz.getName(), e);
         }
     }
 

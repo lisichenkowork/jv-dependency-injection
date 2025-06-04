@@ -1,13 +1,9 @@
 package mate.academy;
 
-import java.lang.reflect.Field;
 import java.util.List;
-
-import mate.academy.lib.Inject;
 import mate.academy.lib.Injector;
 import mate.academy.model.Product;
 import mate.academy.service.ProductService;
-import mate.academy.service.impl.ProductServiceImpl;
 
 public class Main {
 

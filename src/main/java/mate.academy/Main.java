@@ -12,15 +12,6 @@ import mate.academy.service.impl.ProductServiceImpl;
 public class Main {
 
     public static void main(String[] args) {
-        // Please test your Injector here. Feel free to push this class as a part of your solution
-
-        Field[] declaredFields = ProductServiceImpl.class.getDeclaredFields();
-
-        for (Field field : declaredFields) {
-            if (field.isAnnotationPresent(Inject.class)) {
-                System.out.println("yes");
-            }
-        }
 
         Injector injector = Injector.getInjector();
         ProductService productService = (ProductService) injector.getInstance(ProductService.class);

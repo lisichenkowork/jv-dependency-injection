@@ -13,7 +13,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import javax.inject.Inject; // саме це!
+//import javax.inject.Inject; // саме це!
+import mate.academy.lib.Inject;
 
 
 public class Injector {
@@ -29,7 +30,13 @@ public class Injector {
     public Object getInstance(Class<?> interfaceClazz) {
         Object clazzImplementationInstance = null;
 
+
         Class<?> clazz = findImplementation(interfaceClazz);
+
+        //check if annotation @Component is present
+        if (!clazz.isAnnotationPresent(Component.class)) {
+            throw new RuntimeException("No @Component annotation above the class");
+        }
 
         Field[] declaredFields = clazz.getDeclaredFields();
 

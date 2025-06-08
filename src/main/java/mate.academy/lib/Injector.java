@@ -34,11 +34,11 @@ public class Injector {
 
         Field[] declaredFields = clazz.getDeclaredFields();
 
+        clazzImplementationInstance = createNewInstance(clazz);
+
         for (Field field : declaredFields) {
             if (field.isAnnotationPresent(Inject.class)) {
                 Object fieldInstance = getInstance(field.getType());
-
-                clazzImplementationInstance = createNewInstance(clazz);
 
                 field.setAccessible(true);
                 try {
